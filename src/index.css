@@ -9,6 +9,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
     font-size: 1.5em;
     text-align: center;
-    background: #1b1523;
+    background: url('background-shadow.jpeg');
     color: #fff;
 }

@@ -4,12 +4,15 @@ import { useEffect, useState } from 'react'
 import SingleCards from './components/SingleCards'
 
 const cardImages = [
-    { src: '/img/helmet-1.png', matched: false },
-    { src: '/img/potion-1.png', matched: false },
-    { src: '/img/ring-1.png', matched: false },
-    { src: '/img/scroll-1.png', matched: false },
-    { src: '/img/shield-1.png', matched: false },
-    { src: '/img/sword-1.png', matched: false },
+    { src: '/img/chaeyoung.jpeg', matched: false },
+    { src: '/img/dahyun.jpeg', matched: false },
+    { src: '/img/jeongyon.jpeg', matched: false },
+    { src: '/img/jihyo.jpeg', matched: false },
+    { src: '/img/mina.jpeg', matched: false },
+    { src: '/img/momo.jpeg', matched: false },
+    { src: '/img/nayeon.jpeg', matched: false },
+    { src: '/img/sana.jpeg', matched: false },
+    { src: '/img/tzuyu.jpeg', matched: false },
 ]
 
 function App() {
@@ -69,7 +72,7 @@ function App() {
 
     return (
         <div className='App'>
-            <h1>Memory Game</h1>
+            <h1>Twice Memory Game</h1>
             <button onClick={shuffleCards}>new game</button>
             <div className='card-grid'>
                 {cards.map((card) => (
@@ -86,7 +89,7 @@ function App() {
                     />
                 ))}
             </div>
-            <p>Turns : {turns}</p>
+            <h4>Turns : {turns}</h4>
         </div>
     )
 }
