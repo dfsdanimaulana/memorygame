@@ -1,18 +1,23 @@
 import './SingleCards.css'
 
-export default function SingleCards({ card, handleChoice }) {
+export default function SingleCards({ card, handleChoice, flipped, disabled }) {
     const handleClick = () => {
-        handleChoice(card)
+        if (!disabled) {
+            handleChoice(card)
+        }
     }
+
     return (
         <div className='card'>
-            <img src={card.src} alt='front' className='front' />
-            <img
-                src='/img/cover.png'
-                onClick={handleClick}
-                alt='back'
-                className='back'
-            />
+            <div className={flipped ? 'flipped' : ''}>
+                <img src={card.src} alt='front' className='front' />
+                <img
+                    src='/img/cover.png'
+                    onClick={handleClick}
+                    alt='back'
+                    className='back'
+                />
+            </div>
         </div>
     )
 }
