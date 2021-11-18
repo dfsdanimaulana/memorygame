@@ -20,8 +20,14 @@ button:hover {
 }
 
 .card-grid {
-    margin: 40px;
+    margin: 0 40px;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 20px;
+}
+
+.progress {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 50px;
 }
