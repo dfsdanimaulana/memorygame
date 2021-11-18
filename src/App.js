@@ -1,7 +1,8 @@
 import './App.css'
 
-import { useEffect, useState } from 'react'
-import SingleCards from './components/SingleCards'
+import { useEffect, useState, useRef } from 'react'
+import SingleCards from './components/SingleCards/SingleCards'
+import Level from './components/Level/Level'
 
 const cardImages = [
     { src: '/img/chaeyoung.jpeg', matched: false },
@@ -16,13 +17,13 @@ const cardImages = [
 ]
 
 function App() {
+    const intervalTimer = useRef(null)
+    const [timer, setTimer] = useState(0)
     const [cards, setCards] = useState([])
     const [turns, setTurns] = useState(0)
     const [choiceOne, setChoiceOne] = useState(null)
     const [choiceTwo, setChoiceTwo] = useState(null)
     const [disabled, setDisabled] = useState(false)
-    const [time, setTime] = useState(0)
-    const [count, setCount] = useState(0)
 
     // shuffle cards
     const shuffleCards = () => {
@@ -30,41 +31,44 @@ function App() {
             .sort(() => Math.random() - 0.5)
             .map((card) => ({ ...card, id: Math.random() }))
 
-        setTime(0)
-        setCount(0)
-        stopCount()
+        timeStop()
+        setTimer(0)
+        setTurns(0)
         setChoiceOne(null)
         setChoiceTwo(null)
-        setTurns(0)
         setCards(shuffeledCards)
-    }
-
-    // time counter start
-    const countTimes = () => {
-        setTime((prevTime) => prevTime + 1)
     }
 
     // handle user choice
     const handleChoice = (card) => {
-        if (time === 0) {
-            setCount(setInterval(countTimes, 1000))
+        // start timer
+        if (timer === 0) {
+            timeStart()
         }
         choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
     }
 
+    // start time counter
+    const timeStart = () => {
+        if (intervalTimer.current) clearInterval(intervalTimer.current)
+        intervalTimer.current = setInterval(() => {
+            setTimer((prevTimer) => prevTimer + 1)
+        }, 1000)
+    }
+
     // stop time counter
-    const stopCount = () => {
-        // clear interval here
-        clearInterval(count)
-        setCount(0)
+    const timeStop = () => {
+        clearInterval(intervalTimer.current)
     }
 
     // compare two cards
     useEffect(() => {
         //  cek if all matched
         if (cards.filter((card) => card.matched === false).length === 0) {
-            stopCount()
+            // stop count here
+            timeStop()
         }
+
         if (choiceOne && choiceTwo) {
             setDisabled(true)
             if (choiceOne.src === choiceTwo.src) {
@@ -101,7 +105,7 @@ function App() {
             <button onClick={shuffleCards}>new game</button>
             <div className='progress'>
                 <h5>Turns: {turns}</h5>
-                <h5>Time: {time}s</h5>
+                <h5>Time: {timer}s</h5>
             </div>
             <div className='card-grid'>
                 {cards.map((card) => (
@@ -118,6 +122,7 @@ function App() {
                     />
                 ))}
             </div>
+            <Level />
         </div>
     )
 }
