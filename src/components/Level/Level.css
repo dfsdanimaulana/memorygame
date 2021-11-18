@@ -1,15 +1,26 @@
 .level-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 10px;
-  width: 50%;
-  margin: 50px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+    width: 50%;
+    margin: 50px auto;
 }
 
+.level-card {
+    position: relative;
+    display: grid;
+    place-items: center;
+}
 
 .level-card img {
     width: 50%;
     border-radius: 6px;
+    display: block;
+}
+.level-card .locked {
+    top: 0;
+    width: 40%;
+    position: absolute;
 }
 
 .level-card h5 {
