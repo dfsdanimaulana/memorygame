@@ -1,0 +1,47 @@
+#profile-card {
+    position: absolute;
+    top: -25px;
+    left: 20px;
+    margin: 50px auto;
+    border: 2px solid #fdfdfd;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 250px;
+    height: 80px;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas:
+        'avatar username'
+        'avatar point';
+}
+
+#profile-card img {
+    grid-area: avatar;
+    width: 60px;
+    margin: 10px;
+    border-radius: 50%;
+}
+
+#profile-card .username {
+    margin-top: 5px;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    grid-area: username;
+    justify-self: start;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+#profile-card .level {
+    font-size: 20px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 2px solid #c23866;
+}
+#profile-card .point {
+    grid-area: point;
+    justify-self: start;
+}

@@ -3,6 +3,7 @@ import './App.css'
 import { useEffect, useState, useRef } from 'react'
 import SingleCards from './components/SingleCards/SingleCards'
 import Level from './components/Level/Level'
+import Profile from './components/Profile/Profile'
 
 const cardImages = [
     { src: '/img/chaeyoung.jpeg', matched: false },
@@ -102,6 +103,7 @@ function App() {
     return (
         <div className='App'>
             <h1>Twice Memory Game</h1>
+            <Profile />
             <button onClick={shuffleCards}>new game</button>
             <div className='progress'>
                 <h5>Turns: {turns}</h5>
