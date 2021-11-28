@@ -12,8 +12,8 @@
     align-items: center;
     grid-template-columns: 1fr 2fr;
     grid-template-areas:
-        'avatar username'
-        'avatar point';
+    'avatar username'
+    'avatar point';
 }
 
 #profile-card img {
@@ -44,4 +44,11 @@
 #profile-card .point {
     grid-area: point;
     justify-self: start;
+}
+
+@media only screen and (max-width: 600px) {
+    #profile-card {
+        position: static;
+        margin: 30px auto;
+    }
 }

@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react'
 import SingleCards from './components/SingleCards/SingleCards'
 import Level from './components/Level/Level'
 import Profile from './components/Profile/Profile'
+import { useFetch } from './hooks/useFetch'
 
 const cardImages = [
     { src: '/img/chaeyoung.jpeg', matched: false },
@@ -18,7 +19,10 @@ const cardImages = [
 ]
 
 function App() {
-    const intervalTimer = useRef(null)
+    const { data: user, isPending, error } = useFetch(
+        'https://twice-memory-server.herokuapp.com/user',
+    )
+    const intervalTimer = useRef()
     const [timer, setTimer] = useState(0)
     const [cards, setCards] = useState([])
     const [turns, setTurns] = useState(0)
@@ -103,7 +107,10 @@ function App() {
     return (
         <div className='App'>
             <h1>Twice Memory Game</h1>
-            <Profile />
+            {isPending ?
+            <h2>Loading...</h2> :
+            error ? <h2>No user</h2> :
+            <Profile user={user}/>}
             <button onClick={shuffleCards}>new game</button>
             <div className='progress'>
                 <h5>Turns: {turns}</h5>
@@ -125,6 +132,10 @@ function App() {
                 ))}
             </div>
             <Level />
+            <footer>
+                <p>Copyright © 2021</p>
+                <p>Contact me <a href='https://Instagram.com/dnm17_'>@dnm17_</a></p>
+            </footer>
         </div>
     )
 }
