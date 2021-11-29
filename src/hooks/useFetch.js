@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-export const useFetch = (url) => {
+export const useFetch = (url, trigger) => {
     const [data, setData] = useState(null)
     const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState(null)
@@ -13,12 +13,6 @@ export const useFetch = (url) => {
             setIsPending(true)
 
             try {
-                // const res = await fetch(url, { signal: controller.signal })
-                // if (!res.ok) {
-                //     throw new Error(res.statusText)
-                // }
-                // const data = await res.json()
-
                 const res = await axios.get(url, { signal: controller.signal })
 
                 console.log(res)
@@ -41,7 +35,7 @@ export const useFetch = (url) => {
         return () => {
             controller.abort()
         }
-    }, [url])
+    }, [url, trigger])
 
     return { data, isPending, error }
 }

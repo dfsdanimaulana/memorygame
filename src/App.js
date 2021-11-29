@@ -23,16 +23,56 @@ const cardImages = [
 const BASE_URL = 'http://localhost:3003'
 
 function App() {
-    const [url, setUrl] = useState(`${BASE_URL}/user`)
-    // fetch user data
-    const { data: user, isPending, error } = useFetch(url)
-    const intervalTimer = useRef(null)
+    const [trigger, setTrigger] = useState({})
     const [timer, setTimer] = useState(0)
     const [cards, setCards] = useState([])
     const [turns, setTurns] = useState(0)
     const [choiceOne, setChoiceOne] = useState(null)
     const [choiceTwo, setChoiceTwo] = useState(null)
     const [disabled, setDisabled] = useState(false)
+    const [gamePoint, setGamePoint] = useState('')
+
+    const intervalTimer = useRef(null)
+
+    // fetch user data
+    const {
+        data: user,
+        isPending,
+        error,
+    } = useFetch(`${BASE_URL}/user`, trigger)
+
+    // start game automaticly
+    useEffect(() => shuffleCards(), [])
+
+    // compare two cards
+    useEffect(() => {
+        // game finished if all matched
+        if (
+            cards.length !== 0 &&
+            cards.filter((card) => card.matched === false).length < 1
+        ) {
+            // stop count here
+            timeStop()
+            updateUserPoint()
+        }
+        if (choiceOne && choiceTwo) {
+            setDisabled(true)
+            if (choiceOne.src === choiceTwo.src) {
+                setCards((prevCards) => {
+                    return prevCards.map((card) => {
+                        if (card.src === choiceOne.src) {
+                            return { ...card, matched: true }
+                        } else {
+                            return card
+                        }
+                    })
+                })
+                resetTurn()
+            } else {
+                setTimeout(() => resetTurn(), 1000)
+            }
+        }
+    }, [choiceOne, choiceTwo])
 
     // shuffle cards
     const shuffleCards = () => {
@@ -70,39 +110,6 @@ function App() {
         clearInterval(intervalTimer.current)
     }
 
-    // compare two cards
-    useEffect(() => {
-        // cek if all matched
-        // game finished
-
-        if (
-            cards.length !== 0 &&
-            cards.filter((card) => card.matched === false).length < 1
-        ) {
-            // stop count here
-            timeStop()
-            updateUserPoint()
-        }
-
-        if (choiceOne && choiceTwo) {
-            setDisabled(true)
-            if (choiceOne.src === choiceTwo.src) {
-                setCards((prevCards) => {
-                    return prevCards.map((card) => {
-                        if (card.src === choiceOne.src) {
-                            return { ...card, matched: true }
-                        } else {
-                            return card
-                        }
-                    })
-                })
-                resetTurn()
-            } else {
-                setTimeout(() => resetTurn(), 1000)
-            }
-        }
-    }, [choiceOne, choiceTwo])
-
     // reset choices and increase turn
     const resetTurn = () => {
         setChoiceOne(null)
@@ -111,24 +118,29 @@ function App() {
         setDisabled(false)
     }
 
-    // start game automaticly
-    useEffect(() => shuffleCards(), [])
-
     // update user point
-    const updateUserPoint = async () => {
+    const updateUserPoint = () => {
+        const point = 100 - turns - timer
         if (!user) {
             console.log('user not found')
             return
         }
-        const point = 100 - turns - timer
+
+        setGamePoint(`+ ${point}`)
+
         const data = {
             username: user[0].username,
             newPoint: point,
         }
+
+        console.log(data)
         try {
-            const res = await axios.post(`${BASE_URL}/user/point`, data)
-            console.log(res)
-            setUrl(`${BASE_URL}/user`)
+            setTimeout(async () => {
+                const res = await axios.post(`${BASE_URL}/user/point`, data)
+                setGamePoint('')
+                setTrigger(res)
+                console.log(res)
+            }, 2000)
         } catch (error) {
             console.log(error)
         }
@@ -137,18 +149,13 @@ function App() {
     return (
         <div className='App'>
             <h1>Twice Memory Game</h1>
-            {isPending ? (
-                <h2>Loading...</h2>
-            ) : error ? (
-                <h2>No user</h2>
-            ) : (
-                <Profile user={user} />
-            )}
-            <button onClick={updateUserPoint}>Update point</button>
-            <button onClick={shuffleCards}>new game</button>
+            {/* <button onClick={updateUserPoint}>Update point</button> */}
             <div className='progress'>
-                <h5>Turns: {turns}</h5>
-                <h5>Time: {timer}s</h5>
+                <Profile user={user} gamePoint={gamePoint} />
+                <div className='count'>
+                    <div className='turn'>Turns: {turns}</div>
+                    <div className='timer'>Time: {timer}s</div>
+                </div>
             </div>
             <div className='card-grid'>
                 {cards.map((card) => (
@@ -165,11 +172,12 @@ function App() {
                     />
                 ))}
             </div>
+            <button onClick={shuffleCards}>new game</button>
             <Level />
             <footer>
                 <p>Copyright © 2021</p>
                 <p>
-                    Contact me{' '}
+                    Contact me
                     <a href='https://Instagram.com/dnm17_'>@dnm17_</a>
                 </p>
             </footer>

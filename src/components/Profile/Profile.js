@@ -1,7 +1,6 @@
 import './Profile.css'
 
-export default function Profile({user}) {
-
+export default function Profile({ user, gamePoint }) {
     return (
         <div id='profile-card'>
             {user && (
@@ -12,6 +11,9 @@ export default function Profile({user}) {
                         <div className='level'>1</div>
                     </div>
                     <div className='point'>
+                        <label>
+                            point : <span>{user[0].point} {gamePoint}</span>
+                        </label>
                         <input
                             type='range'
                             name='point'

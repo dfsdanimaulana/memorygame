@@ -27,9 +27,23 @@ button:hover {
 }
 
 .progress {
+    height: min-content;
     display: flex;
     justify-content: space-between;
-    padding: 0 50px;
+    align-items: center;
+    margin: 40px;
+}
+
+.count {
+    display: grid;
+    place-items: center;
+    font-size: 0.8em;
+    font-weight: bold;
+    border: 2px solid #fdfdfd;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 250px;
+    height: 80px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -39,4 +53,11 @@ button:hover {
         grid-template-columns: repeat(4, 1fr);
         grid-gap: 10px;
     }
+    .progress {
+        display: block;
+        margin: 20px 50px;
+    }
+   .count {
+       margin-top: 20px;
+   }
 }

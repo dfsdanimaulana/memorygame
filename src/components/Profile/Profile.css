@@ -1,8 +1,4 @@
 #profile-card {
-    position: absolute;
-    top: -25px;
-    left: 20px;
-    margin: 50px auto;
     border: 2px solid #fdfdfd;
     border-radius: 20px;
     background-color: rgba(0, 0, 0, 0.5);
@@ -27,7 +23,7 @@
     margin-top: 5px;
     display: flex;
     width: 100%;
-    justify-content: space-around;
+    justify-content: space-between;
     grid-area: username;
     justify-self: start;
     font-weight: bold;
@@ -35,6 +31,9 @@
 }
 
 #profile-card .level {
+    background-color: rgba(255, 255, 255, 0.26);
+    margin-top: 5px;
+    margin-right: 15px;
     font-size: 20px;
     width: 35px;
     height: 35px;
@@ -42,13 +41,18 @@
     border: 2px solid #c23866;
 }
 #profile-card .point {
+    position: relative;
     grid-area: point;
     justify-self: start;
 }
+#profile-card .point label {
+    display: block;
+    margin-left: 5px;
+    font-weight: bold;
+    font-size: 12px;
+    position: absolute;
+}
 
-@media only screen and (max-width: 600px) {
-    #profile-card {
-        position: static;
-        margin: 30px auto;
-    }
+#profile-card .point label span {
+     color: rgb(150, 255, 52);
 }
