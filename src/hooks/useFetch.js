@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 export const useFetch = (url) => {
     const [data, setData] = useState(null)
@@ -12,14 +13,18 @@ export const useFetch = (url) => {
             setIsPending(true)
 
             try {
-                const res = await fetch(url, { signal: controller.signal })
-                if (!res.ok) {
-                    throw new Error(res.statusText)
-                }
-                const data = await res.json()
+                // const res = await fetch(url, { signal: controller.signal })
+                // if (!res.ok) {
+                //     throw new Error(res.statusText)
+                // }
+                // const data = await res.json()
+
+                const res = await axios.get(url, { signal: controller.signal })
+
+                console.log(res)
 
                 setIsPending(false)
-                setData(data)
+                setData(res.data)
                 setError(null)
             } catch (err) {
                 if (err.name === 'AbortError') {
