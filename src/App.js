@@ -24,7 +24,7 @@ const BASE_URL = 'http://localhost:3003'
 
 function App() {
     const [trigger, setTrigger] = useState({})
-    const [timer, setTimer] = useState(0)
+    const [timer, setTimer] = useState(60)
     const [cards, setCards] = useState([])
     const [turns, setTurns] = useState(0)
     const [choiceOne, setChoiceOne] = useState(null)
@@ -46,6 +46,13 @@ function App() {
 
     // compare two cards
     useEffect(() => {
+        
+        // time out
+        if(timer < 1){
+            timeStop()
+            setDisabled(true)
+        }
+        
         // game finished if all matched
         if (
             cards.length !== 0 &&
@@ -72,16 +79,17 @@ function App() {
                 setTimeout(() => resetTurn(), 1000)
             }
         }
-    }, [choiceOne, choiceTwo])
+    }, [choiceOne, choiceTwo, timer])
 
     // shuffle cards
     const shuffleCards = () => {
+        setDisabled(false)
         const shuffeledCards = [...cardImages, ...cardImages]
             .sort(() => Math.random() - 0.5)
             .map((card) => ({ ...card, id: Math.random() }))
 
         timeStop()
-        setTimer(0)
+        setTimer(60)
         setTurns(0)
         setChoiceOne(null)
         setChoiceTwo(null)
@@ -91,7 +99,7 @@ function App() {
     // handle user choice
     const handleChoice = (card) => {
         // start timer
-        if (timer === 0) {
+        if (timer === 60) {
             timeStart()
         }
         choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
@@ -101,7 +109,7 @@ function App() {
     const timeStart = () => {
         if (intervalTimer.current) clearInterval(intervalTimer.current)
         intervalTimer.current = setInterval(() => {
-            setTimer((prevTimer) => prevTimer + 1)
+            setTimer((prevTimer) => prevTimer - 1)
         }, 1000)
     }
 
