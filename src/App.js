@@ -23,15 +23,16 @@ const cardImages = [
 const BASE_URL = 'http://localhost:3003'
 
 function App() {
-    const [trigger, setTrigger] = useState({})
     const [timer, setTimer] = useState(0)
     const [cards, setCards] = useState([])
     const [turns, setTurns] = useState(0)
+    const [trigger, setTrigger] = useState({})
+    const [disabled, setDisabled] = useState(false)
     const [choiceOne, setChoiceOne] = useState(null)
     const [choiceTwo, setChoiceTwo] = useState(null)
-    const [disabled, setDisabled] = useState(false)
     const [gamePoint, setGamePoint] = useState('')
-
+    const [isLogged, setIsLogged] = useState(false)
+    
     const intervalTimer = useRef(null)
 
     // fetch user data
@@ -120,26 +121,20 @@ function App() {
 
     // update user point
     const updateUserPoint = () => {
+        // calculate the point
         const point = 100 - turns - timer
-        if (!user) {
-            console.log('user not found')
-            return
-        }
-
         setGamePoint(`+ ${point}`)
 
         const data = {
             username: user[0].username,
             newPoint: point,
         }
-
-        console.log(data)
+        
         try {
             setTimeout(async () => {
                 const res = await axios.post(`${BASE_URL}/user/point`, data)
                 setGamePoint('')
                 setTrigger(res)
-                console.log(res)
             }, 2000)
         } catch (error) {
             console.log(error)
@@ -148,15 +143,25 @@ function App() {
 
     return (
         <div className='App'>
+        <div className='log-user'>
+        {isLogged ?
+            <div className='log'>Log out</div> :
+            <div className='log'>Log in</div> 
+        }
+        </div>
             <h1>Twice Memory Game</h1>
             {/* <button onClick={updateUserPoint}>Update point</button> */}
             <div className='progress'>
+            
+            {user &&
                 <Profile user={user} gamePoint={gamePoint} />
+            }
                 <div className='count'>
                     <div className='turn'>Turns: {turns}</div>
                     <div className='timer'>Time: {timer}s</div>
                 </div>
             </div>
+            <button onClick={shuffleCards}>new game</button>
             <div className='card-grid'>
                 {cards.map((card) => (
                     <SingleCards
@@ -172,7 +177,6 @@ function App() {
                     />
                 ))}
             </div>
-            <button onClick={shuffleCards}>new game</button>
             <Level />
             <footer>
                 <p>Copyright © 2021</p>
