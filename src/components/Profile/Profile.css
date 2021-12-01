@@ -1,19 +1,27 @@
 #profile-card {
     border: 2px solid #fdfdfd;
-    border-radius: 20px;
+    border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.5);
     display: grid;
     align-items: center;
     grid-template-columns: 1fr 2fr;
     grid-template-areas:
-    'avatar username'
-    'avatar point';
+        'avatar username'
+        'avatar point';
+
+    height: 60px;
+    max-width: 212px;
+    padding: 0 10px;
 }
 
 #profile-card img {
     grid-area: avatar;
     width: 100%;
     border-radius: 50%;
+
+    width: 50px;
+    height: 50px;
+    margin-left: 5px;
 }
 
 #profile-card .username {
@@ -22,12 +30,22 @@
     grid-area: username;
     align-items: center;
     font-weight: bold;
+
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 25px;
 }
 
 #profile-card .level {
     background-color: rgba(255, 255, 255, 0.26);
     border-radius: 50%;
     border: 2px solid #c23866;
+
+    margin-right: 5px;
+    font-size: 12px;
+    line-height: 14px;
+    height: 20px;
+    width: 20px;
 }
 
 #profile-card .point {
@@ -41,48 +59,20 @@
     margin: 0 auto;
     font-weight: bold;
     font-size: 12px;
+
+    justify-self: start;
+    font-weight: bold;
+    font-size: 12px;
 }
 
 #profile-card .point label span {
     color: rgb(150, 255, 52);
 }
 
+#profile-card .point input {
+    margin-left: -5px;
+}
+
 /* Mobile responsive */
 @media only screen and (max-width: 600px) {
-    #profile-card {
-        height: 60px;
-        border-radius: 10px;
-    }
-
-    #profile-card img {
-        width: 50px;
-        height: 50px;
-        margin-left: 5px;
-        border: 1px solid rgba(0,0,0,.5);
-    }
-
-    #profile-card .username {
-        font-size: 18px;
-        font-weight: bold;
-        line-height: 25px;
-    }
-
-    #profile-card .level {
-        margin-right: 5px;
-        font-size: 12px;
-        line-height: 14px;
-        height: 20px;
-        width: 20px;
-    }
-
-    #profile-card .point {
-        display: grid;
-        place-items: center;
-    }
-
-    #profile-card .point label {
-        justify-self: start;
-        font-weight: bold;
-        font-size: 12px;
-    }
 }

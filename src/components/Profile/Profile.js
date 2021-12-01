@@ -16,7 +16,8 @@ export default function Profile({ user, gamePoint }) {
                     type='range'
                     name='point'
                     id='point'
-                    max='100'
+                    max='10000'
+                    disabled
                     defaultValue={user[0]?.point}
                 />
             </div>

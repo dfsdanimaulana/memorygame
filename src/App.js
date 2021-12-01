@@ -23,7 +23,6 @@ const cardImages = [
 const BASE_URL = 'http://localhost:3003'
 
 function App() {
-    const [trigger, setTrigger] = useState({})
     const [timer, setTimer] = useState(60)
     const [cards, setCards] = useState([])
     const [turns, setTurns] = useState(0)
@@ -33,28 +32,18 @@ function App() {
     const [choiceTwo, setChoiceTwo] = useState(null)
     const [gamePoint, setGamePoint] = useState('')
     const [isLogged, setIsLogged] = useState(false)
-    
+    const [timeOut, setTimeOut] = useState(false)
+
     const intervalTimer = useRef(null)
 
     // fetch user data
-    const {
-        data: user,
-        isPending,
-        error,
-    } = useFetch(`${BASE_URL}/user`, trigger)
+    const { data: user } = useFetch(`${BASE_URL}/user`, trigger)
 
     // start game automaticly
     useEffect(() => shuffleCards(), [])
 
     // compare two cards
     useEffect(() => {
-        
-        // time out
-        if(timer < 1){
-            timeStop()
-            setDisabled(true)
-        }
-        
         // game finished if all matched
         if (
             cards.length !== 0 &&
@@ -81,17 +70,27 @@ function App() {
                 setTimeout(() => resetTurn(), 1000)
             }
         }
-    }, [choiceOne, choiceTwo, timer])
+    }, [choiceOne, choiceTwo])
+
+    // time out handler
+    useEffect(() => {
+        if (timer < 1) {
+            timeStop()
+            setTimeOut(true)
+            setDisabled(true)
+        }
+    }, [timer])
 
     // shuffle cards
     const shuffleCards = () => {
-        setDisabled(false)
         const shuffeledCards = [...cardImages, ...cardImages]
             .sort(() => Math.random() - 0.5)
             .map((card) => ({ ...card, id: Math.random() }))
 
+        setDisabled(false)
         timeStop()
         setTimer(60)
+        setTimeOut(false)
         setTurns(0)
         setChoiceOne(null)
         setChoiceTwo(null)
@@ -122,10 +121,10 @@ function App() {
 
     // reset choices and increase turn
     const resetTurn = () => {
+        setDisabled(false)
         setChoiceOne(null)
         setChoiceTwo(null)
         setTurns((prevTurn) => prevTurn + 1)
-        setDisabled(false)
     }
 
     // update user point
@@ -138,7 +137,7 @@ function App() {
             username: user[0].username,
             newPoint: point,
         }
-        
+
         try {
             setTimeout(async () => {
                 const res = await axios.post(`${BASE_URL}/user/point`, data)
@@ -150,27 +149,42 @@ function App() {
         }
     }
 
+    // hanle log user
+    const handleLogged = () => {
+        setIsLogged(!isLogged)
+    }
     return (
         <div className='App'>
-        <div className='log-user'>
-        {isLogged ?
-            <div className='log'>Log out</div> :
-            <div className='log'>Log in</div> 
-        }
-        </div>
-            <h1>Twice Memory Game</h1>
-            {/* <button onClick={updateUserPoint}>Update point</button> */}
-            <div className='progress'>
-            
-            {user &&
-                <Profile user={user} gamePoint={gamePoint} />
-            }
-                <div className='count'>
-                    <div className='turn'>Turns: {turns}</div>
-                    <div className='timer'>Time: {timer}s</div>
-                </div>
+            <div className='log-user'>
+                {isLogged ? (
+                    <button className='log' onClick={handleLogged}>
+                        Log out
+                    </button>
+                ) : (
+                    <button className='log' onClick={handleLogged}>
+                        Log in
+                    </button>
+                )}
             </div>
-            <button onClick={shuffleCards}>new game</button>
+            <h1>Twice Memory Game</h1>
+            {!isLogged && <h5>Log in to save your game progress</h5>}
+            {isLogged && (
+                <div className='progress'>
+                    {user && <Profile user={user} gamePoint={gamePoint} />}
+                    <div className='count'>
+                        <div>Turns: {turns}</div>
+                        {timeOut ? (
+                            <div>Time Out!</div>
+                        ) : (
+                            <div>Timer: {timer}s</div>
+                        )}
+                    </div>
+                </div>
+            )}
+
+            <button onClick={shuffleCards} className='main-button'>
+                new game
+            </button>
             <div className='card-grid'>
                 {cards.map((card) => (
                     <SingleCards

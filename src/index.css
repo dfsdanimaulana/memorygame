@@ -7,14 +7,20 @@
 body {
     margin: 0;
     font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-    'Helvetica Neue', sans-serif;
+        'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 1.5em;
     text-align: center;
     background: url('./assets/background-shadow.jpeg');
     color: #fff;
+}
+
+button {
+    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
 }
 
 footer {
@@ -25,7 +31,9 @@ footer {
     bottom: -40px;
 }
 
-a, a:link, a:visited {
+a,
+a:link,
+a:visited {
     background-color: none;
     color: #fff;
     text-decoration: none;

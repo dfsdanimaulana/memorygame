@@ -14,9 +14,6 @@ export const useFetch = (url, trigger) => {
 
             try {
                 const res = await axios.get(url, { signal: controller.signal })
-
-                console.log(res)
-
                 setIsPending(false)
                 setData(res.data)
                 setError(null)
