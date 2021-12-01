@@ -154,14 +154,14 @@ function App() {
         setIsLogged(!isLogged)
     }
     return (
-        <div className='App'>
-            <div className='log-user'>
+        <div className="App">
+            <div className="log-user">
                 {isLogged ? (
-                    <button className='log' onClick={handleLogged}>
+                    <button className="log" onClick={handleLogged}>
                         Log out
                     </button>
                 ) : (
-                    <button className='log' onClick={handleLogged}>
+                    <button className="log" onClick={handleLogged}>
                         Log in
                     </button>
                 )}
@@ -169,9 +169,9 @@ function App() {
             <h1>Twice Memory Game</h1>
             {!isLogged && <h5>Log in to save your game progress</h5>}
             {isLogged && (
-                <div className='progress'>
+                <div className="progress">
                     {user && <Profile user={user} gamePoint={gamePoint} />}
-                    <div className='count'>
+                    <div className="count">
                         <div>Turns: {turns}</div>
                         {timeOut ? (
                             <div>Time Out!</div>
@@ -182,10 +182,10 @@ function App() {
                 </div>
             )}
 
-            <button onClick={shuffleCards} className='main-button'>
+            <button onClick={shuffleCards} className="main-button">
                 new game
             </button>
-            <div className='card-grid'>
+            <div className="card-grid">
                 {cards.map((card) => (
                     <SingleCards
                         card={card}
@@ -205,7 +205,7 @@ function App() {
                 <p>Copyright © 2021</p>
                 <p>
                     Contact me
-                    <a href='https://Instagram.com/dnm17_'>@dnm17_</a>
+                    <a href="https://Instagram.com/dnm17_">@dnm17_</a>
                 </p>
             </footer>
         </div>
