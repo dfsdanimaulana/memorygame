@@ -95,10 +95,10 @@ function App() {
         timeStop()
         setTimer(60)
         setTimeOut(false)
-        setTurns(0)
         setChoiceOne(null)
         setChoiceTwo(null)
         setCards(shuffeledCards)
+        setTurns(0)
     }
 
     // handle user choice
@@ -185,6 +185,7 @@ function App() {
         setUser(null)
         setIsLogged(false)
         handleModal()
+        shuffleCards()
     }
     return (
         <div className="App">
