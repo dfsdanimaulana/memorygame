@@ -3,16 +3,16 @@ import './Profile.css'
 export default function Profile({ user, gamePoint }) {
     return (
         <div id="profile-card">
-            <img src={`/avatar/${user[0]?.avatar}`} alt="avatar" />
+            <img src={`/avatar/${user?.avatar}`} alt="avatar" />
             <div className="username">
-                <div>{user[0]?.username}</div>
+                <div>{user?.username}</div>
                 <div className="level">1</div>
             </div>
             <div className="point">
                 <label>
                     point :
                     <span>
-                        {user[0].point} {gamePoint}
+                        {user?.point} {gamePoint}
                     </span>
                 </label>
                 <input
@@ -21,7 +21,7 @@ export default function Profile({ user, gamePoint }) {
                     id="point"
                     max="10000"
                     disabled
-                    defaultValue={user[0]?.point}
+                    defaultValue={user?.point}
                 />
             </div>
         </div>

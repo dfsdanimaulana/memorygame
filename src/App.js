@@ -6,6 +6,8 @@ import Level from './components/Level/Level'
 import Profile from './components/Profile/Profile'
 import { useFetch } from './hooks/useFetch'
 import axios from 'axios'
+import Modal from './components/Modal/Modal'
+import Login from './components/Login/Login'
 
 const cardImages = [
     { src: '/img/chaeyoung.jpeg', matched: false },
@@ -33,11 +35,13 @@ function App() {
     const [gamePoint, setGamePoint] = useState('')
     const [isLogged, setIsLogged] = useState(false)
     const [timeOut, setTimeOut] = useState(false)
+    const [showModal, setShowModal] = useState(false)
+    const [user, setUser] = useState(null)
 
     const intervalTimer = useRef(null)
 
     // fetch user data
-    const { data: user } = useFetch(`${BASE_URL}/user`, trigger)
+    const { data: users } = useFetch(`${BASE_URL}/user`, trigger)
 
     // start game automaticly
     useEffect(() => shuffleCards(), [])
@@ -134,7 +138,7 @@ function App() {
         setGamePoint(`+ ${point}`)
 
         const data = {
-            username: user[0].username,
+            username: user?.username,
             newPoint: point,
         }
 
@@ -143,6 +147,10 @@ function App() {
                 const res = await axios.post(`${BASE_URL}/user/point`, data)
                 setGamePoint('')
                 setTrigger(res)
+                setUser((prevUser) => {
+                    const newUser = { ...prevUser }
+                    return { ...newUser, point: prevUser.point + point }
+                })
             }, 2000)
         } catch (error) {
             console.log(error)
@@ -151,10 +159,50 @@ function App() {
 
     // hanle log user
     const handleLogged = () => {
-        setIsLogged(!isLogged)
+        if (isLogged) {
+            // if logged in show logout modal
+            setShowModal(true)
+        } else {
+            // if not logged in show login modal
+            setShowModal(true)
+        }
+    }
+
+    // function to close modal
+    const handleModal = () => {
+        setShowModal(!showModal)
+    }
+
+    // set logged user
+    const updateUser = (data) => {
+        setUser(data)
+        setIsLogged(true)
+        handleModal()
+    }
+
+    // handle log out user
+    const handleLogOut = () => {
+        setUser(null)
+        setIsLogged(false)
+        handleModal()
     }
     return (
         <div className="App">
+            {showModal && (
+                <Modal handleModal={handleModal}>
+                    {isLogged ? (
+                        <>
+                            <div>Log out</div>
+                            <button onClick={handleLogOut}>log out</button>
+                        </>
+                    ) : (
+                        <>
+                            <h2>Log in</h2>
+                            <Login url={BASE_URL} updateUser={updateUser} />
+                        </>
+                    )}
+                </Modal>
+            )}
             <div className="log-user">
                 {isLogged ? (
                     <button className="log" onClick={handleLogged}>
@@ -185,6 +233,7 @@ function App() {
             <button onClick={shuffleCards} className="main-button">
                 new game
             </button>
+            {/* <button onClick={updateUserPoint}>UpdatePoint</button> */}
             <div className="card-grid">
                 {cards.map((card) => (
                     <SingleCards
