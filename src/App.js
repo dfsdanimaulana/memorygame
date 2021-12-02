@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react'
 import SingleCards from './components/SingleCards/SingleCards'
 import Level from './components/Level/Level'
 import Profile from './components/Profile/Profile'
-import { useFetch } from './hooks/useFetch'
+// import { useFetch } from './hooks/useFetch'
 import axios from 'axios'
 import Modal from './components/Modal/Modal'
 import Login from './components/Login/Login'
@@ -28,7 +28,7 @@ function App() {
     const [timer, setTimer] = useState(60)
     const [cards, setCards] = useState([])
     const [turns, setTurns] = useState(0)
-    const [trigger, setTrigger] = useState({})
+    // const [trigger, setTrigger] = useState({})
     const [disabled, setDisabled] = useState(false)
     const [choiceOne, setChoiceOne] = useState(null)
     const [choiceTwo, setChoiceTwo] = useState(null)
@@ -42,7 +42,7 @@ function App() {
     const intervalTimer = useRef(null)
 
     // fetch user data
-    const { data: users } = useFetch(`${BASE_URL}/user`, trigger)
+    // const { data: users } = useFetch(`${BASE_URL}/user`, trigger)
 
     // start game automaticly
     useEffect(() => shuffleCards(), [])
@@ -149,7 +149,7 @@ function App() {
             setTimeout(async () => {
                 const res = await axios.post(`${BASE_URL}/user/point`, data)
                 setGamePoint('')
-                setTrigger(res)
+                // setTrigger(res)
                 setUser((prevUser) => {
                     const newUser = { ...prevUser }
                     return { ...newUser, point: prevUser.point + point }
