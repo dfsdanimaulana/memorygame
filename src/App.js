@@ -37,6 +37,7 @@ function App() {
     const [timeOut, setTimeOut] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [user, setUser] = useState(null)
+    const [gameDone, setGameDone] = useState(false)
 
     const intervalTimer = useRef(null)
 
@@ -56,6 +57,7 @@ function App() {
             // stop count here
             timeStop()
             updateUserPoint()
+            setGameDone(true)
         }
         if (choiceOne && choiceTwo) {
             setDisabled(true)
@@ -92,6 +94,7 @@ function App() {
             .map((card) => ({ ...card, id: Math.random() }))
 
         setDisabled(false)
+        setGameDone(false)
         timeStop()
         setTimer(60)
         setTimeOut(false)
@@ -193,8 +196,8 @@ function App() {
                 <Modal handleModal={handleModal}>
                     {isLogged ? (
                         <>
-                            <div>Log out</div>
-                            <button onClick={handleLogOut}>log out</button>
+                            <div>are you sure?</div>
+                            <button onClick={handleLogOut} className="log login-button">log out</button>
                         </>
                     ) : (
                         <Login url={BASE_URL} updateUser={updateUser} />
@@ -231,7 +234,8 @@ function App() {
             <button onClick={shuffleCards} className="main-button">
                 new game
             </button>
-            {/* <button onClick={updateUserPoint}>UpdatePoint</button> */}
+            {gameDone && <p>{`game finish with ${turns} turns in ${60 - timer} second`}</p>}
+           
             <div className="card-grid">
                 {cards.map((card) => (
                     <SingleCards

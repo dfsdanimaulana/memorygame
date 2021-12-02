@@ -20,9 +20,10 @@
 }
 
 #form-container input.login-input:focus {
-    border: none;
+    outline: none;
 }
-#form-container .login-button {
+
+.login-button {
     display: block;
     margin: 30px auto;
     height: 30px;

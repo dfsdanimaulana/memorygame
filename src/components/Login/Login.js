@@ -9,62 +9,77 @@ export default function Login({ url, updateUser }) {
         password: '',
         check_password: '',
     })
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [checkPassword, setCheckPassword] = useState('')
     const [register, setRegister] = useState(false)
+    
+    const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState(null)
 
     const handleChange = (e) => {
-        const newData = { ...data }
-        const newValue = e.target.id
-        setData({ ...newData, [newValue]: e.target.value })
+        setError(false)
+        const { id, value } = e.target
+        setData((prevState) => ({
+            ...prevState,
+            [id]: value,
+        }))
     }
+   
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(data)
-        // const data = { username, password, checkPassword }
+        if(register){
+            if(data.password !== data.check_password){
+                setError('wrong check password')
+                return
+            }
+        }
+        setIsPending(true)
+        
+        const targetUrl = register ? `${url}/user` : `${url}/user/login`
 
-        // const targetUrl = register ? `${url}/user` : `${url}/user/login`
-
-        // try {
-        //     const res = await axios.post(targetUrl, data)
-        //     updateUser(res.data)
-        //     setRegister(false)
-        // } catch (error) {
-        //     setError(error?.response?.data?.message)
-        // }
+        try {
+             const res = await axios.post(targetUrl, data)
+             setIsPending(false)
+             updateUser(res.data)
+             setRegister(false)
+        } catch (error) {
+            console.log(error)
+             setIsPending(false)
+             setError(error?.response?.data?.message)
+        }
     }
 
     return (
         <div id="form-container">
             {register ? <h3>Register</h3> : <h3>Log in</h3>}
+            {isPending && <p className="form-error">Loading...</p>}
             {error && <p className="form-error">{error}</p>}
             <form className="login-form" onSubmit={handleSubmit}>
                 <input
+                    id="username"
                     className="login-input"
                     type="text"
                     onChange={handleChange}
-                    value={data.username}
-                    autoComplete="false"
+                    autoComplete="off"
                     autoFocus="true"
                     placeholder="username"
+                    required
                 />
                 <input
+                    id="password"
                     className="login-input"
                     type="password"
                     onChange={handleChange}
-                    value={data.password}
                     placeholder="password"
+                    required
                 />
 
                 {register && (
                     <input
+                        id="check_password"
                         className="login-input"
                         onChange={handleChange}
                         type="password"
-                        value={data.check_password}
                         placeholder="check password"
+                        required
                     />
                 )}
                 <button className="log login-button" type="submit">
