@@ -197,10 +197,7 @@ function App() {
                             <button onClick={handleLogOut}>log out</button>
                         </>
                     ) : (
-                        <>
-                            <h2>Log in</h2>
-                            <Login url={BASE_URL} updateUser={updateUser} />
-                        </>
+                        <Login url={BASE_URL} updateUser={updateUser} />
                     )}
                 </Modal>
             )}
