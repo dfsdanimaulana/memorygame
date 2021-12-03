@@ -1,0 +1,21 @@
+#board-container {
+    margin: 30px;
+    border: 2px solid red;
+    max-height: 310px;
+    overflow: auto;
+    position: relative;
+}
+.board-list {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.button-group {
+    display: flex;
+    position: sticky;
+    font-size: 14px;
+    top: 0;
+}
+.board-list ul {
+    list-style: none;
+}

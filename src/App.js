@@ -8,7 +8,7 @@ import { useFetch } from './hooks/useFetch'
 import axios from 'axios'
 import Modal from './components/Modal/Modal'
 import Login from './components/Login/Login'
-import TopPayer from './components/TopPlayer/TopPayer'
+import ScoreBoard from './components/ScoreBoard/ScoreBoard'
 
 const cardImages = [
     { src: '/img/chaeyoung.jpeg', matched: false },
@@ -39,6 +39,7 @@ function App() {
     const [showModal, setShowModal] = useState(false)
     const [user, setUser] = useState(null)
     const [gameDone, setGameDone] = useState(false)
+    const [showBoard, setShowBoard] = useState(false)
 
     const intervalTimer = useRef(null)
 
@@ -178,7 +179,11 @@ function App() {
 
     // function to close modal
     const handleModal = () => {
-        setShowModal(!showModal)
+        if (showBoard) {
+            setShowBoard(false)
+        } else {
+            setShowModal(!showModal)
+        }
     }
 
     // set logged user
@@ -194,6 +199,11 @@ function App() {
         setIsLogged(false)
         handleModal()
         shuffleCards()
+    }
+
+    // open board
+    const handleBoard = () => {
+        setShowBoard(true)
     }
 
     return (
@@ -214,7 +224,20 @@ function App() {
                     )}
                 </Modal>
             )}
-            <TopPayer users={users} topTime={topTime} topTurn={topTurn} />
+            {showBoard && (
+                <Modal handleModal={handleModal}>
+                    <ScoreBoard
+                        users={users}
+                        topTime={topTime}
+                        topTurn={topTurn}
+                    />
+                </Modal>
+            )}
+            <div className="board-button">
+                <button className="log" onClick={handleBoard}>
+                    Scoreboard
+                </button>
+            </div>
             <div className="log-user">
                 {isLogged ? (
                     <button className="log" onClick={handleLogged}>
