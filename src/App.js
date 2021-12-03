@@ -8,6 +8,7 @@ import { useFetch } from './hooks/useFetch'
 import axios from 'axios'
 import Modal from './components/Modal/Modal'
 import Login from './components/Login/Login'
+import TopPayer from './components/TopPlayer/TopPayer'
 
 const cardImages = [
     { src: '/img/chaeyoung.jpeg', matched: false },
@@ -43,6 +44,8 @@ function App() {
 
     // fetch user data
     const { data: users } = useFetch(`${BASE_URL}/user`, trigger)
+    const { data: topTime } = useFetch(`${BASE_URL}/user/time`, trigger)
+    const { data: topTurn } = useFetch(`${BASE_URL}/user/turn`, trigger)
 
     // start game automaticly
     useEffect(() => shuffleCards(), [])
@@ -143,6 +146,8 @@ function App() {
         const data = {
             username: user?.username,
             newPoint: point,
+            time: 60 - timer,
+            turn: turns,
         }
 
         try {
@@ -190,6 +195,7 @@ function App() {
         handleModal()
         shuffleCards()
     }
+
     return (
         <div className="App">
             {showModal && (
@@ -197,13 +203,18 @@ function App() {
                     {isLogged ? (
                         <>
                             <div>are you sure?</div>
-                            <button onClick={handleLogOut} className="log login-button">log out</button>
+                            <button
+                                onClick={handleLogOut}
+                                className="log login-button">
+                                log out
+                            </button>
                         </>
                     ) : (
                         <Login url={BASE_URL} updateUser={updateUser} />
                     )}
                 </Modal>
             )}
+            <TopPayer users={users} topTime={topTime} topTurn={topTurn} />
             <div className="log-user">
                 {isLogged ? (
                     <button className="log" onClick={handleLogged}>
@@ -234,8 +245,12 @@ function App() {
             <button onClick={shuffleCards} className="main-button">
                 new game
             </button>
-            {gameDone && <p>{`game finish with ${turns} turns in ${60 - timer} second`}</p>}
-           
+            {gameDone && (
+                <p>{`game finish with ${turns} turns in ${
+                    60 - timer
+                } second`}</p>
+            )}
+
             <div className="card-grid">
                 {cards.map((card) => (
                     <SingleCards
