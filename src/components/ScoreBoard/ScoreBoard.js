@@ -35,16 +35,16 @@ export default function ScoreBoard({ users, topTurn, topTime }) {
                     Turn Records
                 </button>
             </div>
+
             {point && (
                 <div className="board-list">
                     <ul>
                         {users &&
                             users.map((user, index) => (
-                                <li key={user._id}>
-                                    <span>
-                                        {index + 1} | {user.username} |{' '}
-                                        {user.point}
-                                    </span>
+                                <li className="data-list" key={user._id}>
+                                    <span> {index + 1} </span>
+                                    <span> {user.username} </span>
+                                    <span> {user.point} pts </span>
                                 </li>
                             ))}
                     </ul>
@@ -55,11 +55,10 @@ export default function ScoreBoard({ users, topTurn, topTime }) {
                     <ul>
                         {topTime &&
                             topTime.map((user, index) => (
-                                <li key={user._id}>
-                                    <span>
-                                        {index + 1} | {user.username} |{' '}
-                                        {user.time}
-                                    </span>
+                                <li className="data-list" key={user._id}>
+                                    <span> {index + 1} </span>
+                                    <span> {user.username} </span>
+                                    <span> {user.time}s </span>
                                 </li>
                             ))}
                     </ul>
@@ -70,11 +69,10 @@ export default function ScoreBoard({ users, topTurn, topTime }) {
                     <ul>
                         {topTurn &&
                             topTurn.map((user, index) => (
-                                <li key={user._id}>
-                                    <span>
-                                        {index + 1} | {user.username} |{' '}
-                                        {user.turn}
-                                    </span>
+                                <li className="data-list" key={user._id}>
+                                    <span> {index + 1} </span>
+                                    <span> {user.username} </span>
+                                    <span> {user.turn} turns </span>
                                 </li>
                             ))}
                     </ul>

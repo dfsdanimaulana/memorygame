@@ -22,8 +22,8 @@ const cardImages = [
     { src: '/img/tzuyu.jpeg', matched: false },
 ]
 
-// const BASE_URL = 'https://twice-memory-server.herokuapp.com'
-const BASE_URL = 'http://localhost:3003'
+const BASE_URL = 'https://twice-memory-server.herokuapp.com'
+// const BASE_URL = 'http://localhost:3003'
 
 function App() {
     const [timer, setTimer] = useState(60)
@@ -44,7 +44,7 @@ function App() {
     const intervalTimer = useRef(null)
 
     // fetch user data
-    const { data: users } = useFetch(`${BASE_URL}/user`, trigger)
+    const { data: users } = useFetch(`${BASE_URL}/user/point`, trigger)
     const { data: topTime } = useFetch(`${BASE_URL}/user/time`, trigger)
     const { data: topTurn } = useFetch(`${BASE_URL}/user/turn`, trigger)
 
