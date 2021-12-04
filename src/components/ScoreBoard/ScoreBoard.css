@@ -1,0 +1,69 @@
+#board-container {
+    margin: 10px;
+    text-align: start;
+    position: relative;
+    /* border: 1px solid red; */
+}
+.board-list {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.button-group {
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+.button-group button {
+    font-weight: bold;
+    font-size: 18px;
+    background: inherit;
+    width: 130px;
+    border: none;
+    border-bottom: 2px solid #ff669e;
+}
+.board-list ul {
+    list-style: none;
+    margin-left: -15px;
+}
+
+.data-list:first-child span:first-child {
+    border-bottom: 2px solid #ecc728;
+    color: #ecc728;
+    font-weight: bold;
+}
+.data-list:nth-child(2) span:first-child {
+    border-bottom: 2px solid #b9bac0;
+    color: #b9bac0;
+    font-weight: bold;
+}
+.data-list:nth-child(3) span:first-child {
+    border-bottom: 2px solid #f5b26d;
+    font-weight: bold;
+    color: #f5b26d;
+}
+.data-list {
+    display: flex;
+    margin: 5px 0;
+}
+
+.data-list span:first-child {
+    border-bottom: 1px solid #ff669e;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+
+.data-list span:nth-child(2) {
+    border-bottom: 1px solid #ff669e;
+    width: 200px;
+    margin: 0 10px;
+    padding-left: 5px;
+}
+
+.data-list span:last-child {
+    border-bottom: 1px solid #ff669e;
+    width: 100px;
+    text-align: center;
+}

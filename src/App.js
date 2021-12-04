@@ -4,10 +4,11 @@ import { useEffect, useState, useRef } from 'react'
 import SingleCards from './components/SingleCards/SingleCards'
 import Level from './components/Level/Level'
 import Profile from './components/Profile/Profile'
-// import { useFetch } from './hooks/useFetch'
+import { useFetch } from './hooks/useFetch'
 import axios from 'axios'
 import Modal from './components/Modal/Modal'
 import Login from './components/Login/Login'
+import ScoreBoard from './components/ScoreBoard/ScoreBoard'
 
 const cardImages = [
     { src: '/img/chaeyoung.jpeg', matched: false },
@@ -28,7 +29,7 @@ function App() {
     const [timer, setTimer] = useState(60)
     const [cards, setCards] = useState([])
     const [turns, setTurns] = useState(0)
-    // const [trigger, setTrigger] = useState({})
+    const [trigger, setTrigger] = useState({})
     const [disabled, setDisabled] = useState(false)
     const [choiceOne, setChoiceOne] = useState(null)
     const [choiceTwo, setChoiceTwo] = useState(null)
@@ -38,11 +39,14 @@ function App() {
     const [showModal, setShowModal] = useState(false)
     const [user, setUser] = useState(null)
     const [gameDone, setGameDone] = useState(false)
+    const [showBoard, setShowBoard] = useState(false)
 
     const intervalTimer = useRef(null)
 
     // fetch user data
-    // const { data: users } = useFetch(`${BASE_URL}/user`, trigger)
+    const { data: users } = useFetch(`${BASE_URL}/user/point`, trigger)
+    const { data: topTime } = useFetch(`${BASE_URL}/user/time`, trigger)
+    const { data: topTurn } = useFetch(`${BASE_URL}/user/turn`, trigger)
 
     // start game automaticly
     useEffect(() => shuffleCards(), [])
@@ -143,13 +147,15 @@ function App() {
         const data = {
             username: user?.username,
             newPoint: point,
+            time: 60 - timer,
+            turn: turns,
         }
 
         try {
             setTimeout(async () => {
                 const res = await axios.post(`${BASE_URL}/user/point`, data)
                 setGamePoint('')
-                // setTrigger(res)
+                setTrigger(res)
                 setUser((prevUser) => {
                     const newUser = { ...prevUser }
                     return { ...newUser, point: prevUser.point + point }
@@ -173,7 +179,11 @@ function App() {
 
     // function to close modal
     const handleModal = () => {
-        setShowModal(!showModal)
+        if (showBoard) {
+            setShowBoard(false)
+        } else {
+            setShowModal(!showModal)
+        }
     }
 
     // set logged user
@@ -190,6 +200,12 @@ function App() {
         handleModal()
         shuffleCards()
     }
+
+    // open board
+    const handleBoard = () => {
+        setShowBoard(true)
+    }
+
     return (
         <div className="App">
             {showModal && (
@@ -197,13 +213,31 @@ function App() {
                     {isLogged ? (
                         <>
                             <div>are you sure?</div>
-                            <button onClick={handleLogOut} className="log login-button">log out</button>
+                            <button
+                                onClick={handleLogOut}
+                                className="log login-button">
+                                log out
+                            </button>
                         </>
                     ) : (
                         <Login url={BASE_URL} updateUser={updateUser} />
                     )}
                 </Modal>
             )}
+            {showBoard && (
+                <Modal handleModal={handleModal}>
+                    <ScoreBoard
+                        users={users}
+                        topTime={topTime}
+                        topTurn={topTurn}
+                    />
+                </Modal>
+            )}
+            <div className="board-button">
+                <button className="log" onClick={handleBoard}>
+                    Scoreboard
+                </button>
+            </div>
             <div className="log-user">
                 {isLogged ? (
                     <button className="log" onClick={handleLogged}>
@@ -234,8 +268,12 @@ function App() {
             <button onClick={shuffleCards} className="main-button">
                 new game
             </button>
-            {gameDone && <p>{`game finish with ${turns} turns in ${60 - timer} second`}</p>}
-           
+            {gameDone && (
+                <p>{`game finish with ${turns} turns in ${
+                    60 - timer
+                } second`}</p>
+            )}
+
             <div className="card-grid">
                 {cards.map((card) => (
                     <SingleCards

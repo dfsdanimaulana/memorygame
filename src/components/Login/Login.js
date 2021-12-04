@@ -3,6 +3,21 @@ import axios from 'axios'
 
 import './Login.css'
 
+const twiceName = [
+    'mina',
+    'sana',
+    'jihyo',
+    'momo',
+    'tzuyu',
+    'dahyun',
+    'nayeon',
+    'jeongyeon',
+    'chaeyoung',
+    'twice',
+    'once',
+    'teudoongie',
+]
+
 export default function Login({ url, updateUser }) {
     const [data, setData] = useState({
         username: '',
@@ -10,7 +25,7 @@ export default function Login({ url, updateUser }) {
         check_password: '',
     })
     const [register, setRegister] = useState(false)
-    
+
     const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState(null)
 
@@ -22,28 +37,32 @@ export default function Login({ url, updateUser }) {
             [id]: value,
         }))
     }
-   
+
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if(register){
-            if(data.password !== data.check_password){
+        if (twiceName.includes(data.username)) {
+            setError("please don't use twice name 😊")
+            return
+        }
+        if (register) {
+            if (data.password !== data.check_password) {
                 setError('wrong check password')
                 return
             }
         }
         setIsPending(true)
-        
+
         const targetUrl = register ? `${url}/user` : `${url}/user/login`
 
         try {
-             const res = await axios.post(targetUrl, data)
-             setIsPending(false)
-             updateUser(res.data)
-             setRegister(false)
+            const res = await axios.post(targetUrl, data)
+            setIsPending(false)
+            updateUser(res.data)
+            setRegister(false)
         } catch (error) {
             console.log(error)
-             setIsPending(false)
-             setError(error?.response?.data?.message)
+            setIsPending(false)
+            setError(error?.response?.data?.message)
         }
     }
 
@@ -59,7 +78,6 @@ export default function Login({ url, updateUser }) {
                     type="text"
                     onChange={handleChange}
                     autoComplete="off"
-                    autoFocus="true"
                     placeholder="username"
                     required
                 />
