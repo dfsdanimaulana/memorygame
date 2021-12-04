@@ -78,6 +78,7 @@ export default function Login({ url, updateUser }) {
                     type="text"
                     onChange={handleChange}
                     autoComplete="off"
+                    autoFocus
                     placeholder="username"
                     required
                 />
