@@ -1,7 +1,7 @@
 #board-container {
-    margin: 30px;
-    border: 2px solid red;
+    margin: 10px;
     max-height: 310px;
+    text-align: start;
     overflow: auto;
     position: relative;
 }
@@ -15,6 +15,14 @@
     position: sticky;
     font-size: 14px;
     top: 0;
+}
+.button-group button {
+    font-weight: bold;
+    font-size: 14px;
+    background: #fff;
+    margin: 0 5px;
+    border: none;
+    border-bottom: 2px solid red;
 }
 .board-list ul {
     list-style: none;
