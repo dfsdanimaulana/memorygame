@@ -22,8 +22,7 @@ const cardImages = [
     { src: '/img/tzuyu.jpeg', matched: false },
 ]
 
-const BASE_URL = 'https://twice-memory-server.herokuapp.com'
-// const BASE_URL = 'http://localhost:3003'
+const BASE_URL = 'http://localhost:3003'
 
 function App() {
     const [timer, setTimer] = useState(60)
