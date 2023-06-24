@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/twice-memorygame/static/css/main.6113e02d.chunk.css",
-    "main.js": "/twice-memorygame/static/js/main.0b62fc4e.chunk.js",
-    "main.js.map": "/twice-memorygame/static/js/main.0b62fc4e.chunk.js.map",
-    "runtime-main.js": "/twice-memorygame/static/js/runtime-main.f6dfa5a7.js",
-    "runtime-main.js.map": "/twice-memorygame/static/js/runtime-main.f6dfa5a7.js.map",
-    "static/js/2.c1ccea10.chunk.js": "/twice-memorygame/static/js/2.c1ccea10.chunk.js",
-    "static/js/2.c1ccea10.chunk.js.map": "/twice-memorygame/static/js/2.c1ccea10.chunk.js.map",
-    "index.html": "/twice-memorygame/index.html",
-    "static/css/main.6113e02d.chunk.css.map": "/twice-memorygame/static/css/main.6113e02d.chunk.css.map",
-    "static/js/2.c1ccea10.chunk.js.LICENSE.txt": "/twice-memorygame/static/js/2.c1ccea10.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/twice-memorygame/static/media/background-shadow.14f6e0d6.jpeg"
+    "main.css": "/memorygame/static/css/main.a6422f97.chunk.css",
+    "main.js": "/memorygame/static/js/main.0b62fc4e.chunk.js",
+    "main.js.map": "/memorygame/static/js/main.0b62fc4e.chunk.js.map",
+    "runtime-main.js": "/memorygame/static/js/runtime-main.825477cf.js",
+    "runtime-main.js.map": "/memorygame/static/js/runtime-main.825477cf.js.map",
+    "static/js/2.c1ccea10.chunk.js": "/memorygame/static/js/2.c1ccea10.chunk.js",
+    "static/js/2.c1ccea10.chunk.js.map": "/memorygame/static/js/2.c1ccea10.chunk.js.map",
+    "index.html": "/memorygame/index.html",
+    "static/css/main.a6422f97.chunk.css.map": "/memorygame/static/css/main.a6422f97.chunk.css.map",
+    "static/js/2.c1ccea10.chunk.js.LICENSE.txt": "/memorygame/static/js/2.c1ccea10.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/memorygame/static/media/background-shadow.14f6e0d6.jpeg"
   },
   "entrypoints": [
-    "static/js/runtime-main.f6dfa5a7.js",
+    "static/js/runtime-main.825477cf.js",
     "static/js/2.c1ccea10.chunk.js",
-    "static/css/main.6113e02d.chunk.css",
+    "static/css/main.a6422f97.chunk.css",
     "static/js/main.0b62fc4e.chunk.js"
   ]
 }
