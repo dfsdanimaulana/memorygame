@@ -22,7 +22,8 @@ const cardImages = [
     { src: process.env.PUBLIC_URL + '/img/tzuyu.jpeg', matched: false },
 ]
 
-const BASE_URL = 'http://localhost:3003'
+const BASE_URL =
+    'https://memorygame-server-olec-b6zp3fitl-dfsdanimaulana.vercel.app/'
 
 function App() {
     const [timer, setTimer] = useState(60)
