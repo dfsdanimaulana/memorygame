@@ -11,15 +11,15 @@ import Login from './components/Login/Login'
 import ScoreBoard from './components/ScoreBoard/ScoreBoard'
 
 const cardImages = [
-    { src: '/img/chaeyoung.jpeg', matched: false },
-    { src: '/img/dahyun.jpeg', matched: false },
-    { src: '/img/jeongyon.jpeg', matched: false },
-    { src: '/img/jihyo.jpeg', matched: false },
-    { src: '/img/mina.jpeg', matched: false },
-    { src: '/img/momo.jpeg', matched: false },
-    { src: '/img/nayeon.jpeg', matched: false },
-    { src: '/img/sana.jpeg', matched: false },
-    { src: '/img/tzuyu.jpeg', matched: false },
+    { src: process.env.PUBLIC_URL + '/img/chaeyoung.jpeg', matched: false },
+    { src: process.env.PUBLIC_URL + '/img/dahyun.jpeg', matched: false },
+    { src: process.env.PUBLIC_URL + '/img/jeongyon.jpeg', matched: false },
+    { src: process.env.PUBLIC_URL + '/img/jihyo.jpeg', matched: false },
+    { src: process.env.PUBLIC_URL + '/img/mina.jpeg', matched: false },
+    { src: process.env.PUBLIC_URL + '/img/momo.jpeg', matched: false },
+    { src: process.env.PUBLIC_URL + '/img/nayeon.jpeg', matched: false },
+    { src: process.env.PUBLIC_URL + '/img/sana.jpeg', matched: false },
+    { src: process.env.PUBLIC_URL + '/img/tzuyu.jpeg', matched: false },
 ]
 
 const BASE_URL = 'http://localhost:3003'
