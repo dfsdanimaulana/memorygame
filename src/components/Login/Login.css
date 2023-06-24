@@ -1,0 +1,41 @@
+#form-container {
+    height: 100%;
+    width: 100%;
+}
+#form-container h3 {
+    font-weight: bold;
+    color: #ff669e;
+}
+
+#form-container .form-error {
+    font-size: 20px;
+    color: #ff3b3b;
+}
+#form-container input.login-input {
+    height: 30px;
+    background: none;
+    margin-bottom: 10px;
+    border: none;
+    border-bottom: 2px solid #ff669e;
+}
+
+#form-container input.login-input:focus {
+    outline: none;
+}
+
+.login-button {
+    display: block;
+    margin: 30px auto;
+    height: 30px;
+    background: #fa80ad;
+}
+#form-container .login-button:hover {
+    background: #ff669e;
+}
+#form-container .other {
+    font-size: 20px;
+}
+#form-container .other span {
+    color: #ff669e;
+    cursor: pointer;
+}
