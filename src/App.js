@@ -48,7 +48,7 @@ function App() {
     const { data: topTime } = useFetch(`${BASE_URL}/user/time`, trigger)
     const { data: topTurn } = useFetch(`${BASE_URL}/user/turn`, trigger)
 
-    // start game automaticly
+    // start game automatically
     useEffect(() => shuffleCards(), [])
 
     // compare two cards
@@ -110,6 +110,8 @@ function App() {
 
     // handle user choice
     const handleChoice = (card) => {
+        // Stop the user from being able to click the first card twice #fix bug double click
+        if (card.id === choiceOne?.id) return
         // start timer
         if (timer === 60) {
             timeStart()
